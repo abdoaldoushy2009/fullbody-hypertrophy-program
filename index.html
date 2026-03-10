@@ -1,0 +1,922 @@
+<html lang="en" dir="ltr"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3-Day Full Body Hypertrophy</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=DM+Sans:wght@300;400;500;600&amp;family=Space+Mono:wght@400;700&amp;family=Cairo:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0a0a0a;--surface:#111111;--card:#161616;--border:#222;
+    --accent:#e8ff3b;--accent2:#ff4f3b;--accent3:#3bffd4;
+    --text:#f0f0f0;--muted:#666;
+    --day1:#e8ff3b;--day2:#ff4f3b;--day3:#3bffd4;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
+  body.lang-ar{font-family:'Cairo',sans-serif;}
+  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.4;}
+
+  /* LANG SWITCHER */
+  .lang-switcher{position:fixed;top:20px;right:20px;z-index:1000;display:flex;gap:4px;background:var(--card);border:1px solid var(--border);padding:4px;}
+  [dir="rtl"] .lang-switcher{right:auto;left:20px;}
+
+  /* DOWNLOAD / INSTALL BUTTONS */
+  .action-bar{position:fixed;bottom:20px;right:20px;z-index:1000;display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
+  [dir="rtl"] .action-bar{right:auto;left:20px;align-items:flex-start;}
+  .dl-btn{display:flex;align-items:center;gap:8px;background:var(--accent);color:#000;border:none;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1.5px;padding:12px 20px;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 20px rgba(232,255,59,0.3);}
+  [dir="rtl"] .dl-btn{font-family:'Cairo',sans-serif;font-weight:700;font-size:14px;letter-spacing:0;}
+  .dl-btn:hover{background:#fff;transform:translateY(-2px);box-shadow:0 6px 24px rgba(232,255,59,0.4);}
+  .dl-btn svg{width:18px;height:18px;flex-shrink:0;}
+  .pwa-btn{display:none;align-items:center;gap:8px;background:var(--card);color:var(--accent);border:1px solid var(--accent);font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1.5px;padding:12px 20px;cursor:pointer;transition:all 0.2s;}
+  [dir="rtl"] .pwa-btn{font-family:'Cairo',sans-serif;font-weight:700;font-size:14px;letter-spacing:0;}
+  .pwa-btn.show{display:flex;}
+  .pwa-btn:hover{background:rgba(232,255,59,0.1);}
+
+  /* TOAST NOTIFICATION */
+  .toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--card);border:1px solid var(--accent);color:var(--text);padding:14px 28px;font-size:13px;font-family:'Space Mono',monospace;opacity:0;pointer-events:none;transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);z-index:2000;white-space:nowrap;max-width:90vw;box-shadow:0 8px 32px rgba(0,0,0,0.5);}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .lang-btn{background:transparent;border:none;color:var(--muted);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;padding:8px 12px;cursor:pointer;transition:all 0.2s;text-transform:uppercase;}
+  .lang-btn:hover{color:var(--text);}
+  .lang-btn.active{background:var(--accent);color:#000;font-weight:700;}
+
+  header{padding:60px 40px 40px;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+  header::after{content:attr(data-bg-word);position:absolute;right:-20px;top:-30px;font-family:'Bebas Neue',sans-serif;font-size:280px;color:rgba(255,255,255,0.02);pointer-events:none;line-height:1;}
+  [dir="rtl"] header::after{right:auto;left:-20px;font-family:'Cairo',sans-serif;font-size:160px;top:10px;}
+  .tag{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:16px;}
+  [dir="rtl"] .tag{font-family:'Cairo',sans-serif;letter-spacing:0;font-size:13px;}
+  h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,8vw,100px);line-height:0.9;letter-spacing:2px;}
+  [dir="rtl"] h1{font-family:'Cairo',sans-serif;font-weight:700;line-height:1.1;letter-spacing:0;}
+  h1 span{color:var(--accent);}
+  .header-meta{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap;}
+  .meta-pill{background:var(--card);border:1px solid var(--border);padding:8px 16px;font-size:12px;font-family:'Space Mono',monospace;color:var(--muted);letter-spacing:1px;}
+  [dir="rtl"] .meta-pill{font-family:'Cairo',sans-serif;letter-spacing:0;font-size:13px;}
+  .meta-pill strong{color:var(--text);}
+
+  .principles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--border);border-bottom:1px solid var(--border);}
+  .principle{background:var(--bg);padding:24px 28px;position:relative;overflow:hidden;}
+  .principle::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;}
+  [dir="rtl"] .principle::before{left:auto;right:0;}
+  .principle:nth-child(1)::before{background:var(--day1);}
+  .principle:nth-child(2)::before{background:var(--day2);}
+  .principle:nth-child(3)::before{background:var(--day3);}
+  .principle:nth-child(4)::before{background:var(--accent);}
+  .principle-icon{font-size:20px;margin-bottom:10px;}
+  .principle-title{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;}
+  [dir="rtl"] .principle-title{font-family:'Cairo',sans-serif;letter-spacing:0;font-size:12px;}
+  .principle-val{font-size:15px;font-weight:500;color:var(--text);line-height:1.4;}
+
+  main{padding:40px;max-width:1200px;margin:0 auto;}
+  .section-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:12px;}
+  [dir="rtl"] .section-label{font-family:'Cairo',sans-serif;letter-spacing:0;font-size:13px;}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+  .days-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:2px;margin-bottom:60px;background:var(--border);}
+  .day-card{background:var(--card);padding:0;position:relative;overflow:hidden;animation:fadeUp 0.6s ease both;}
+  .day-card:nth-child(1){animation-delay:0.1s;}
+  .day-card:nth-child(2){animation-delay:0.2s;}
+  .day-card:nth-child(3){animation-delay:0.3s;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+  .day-header{padding:28px 28px 20px;border-bottom:1px solid var(--border);position:relative;}
+  .day-number{font-family:'Bebas Neue',sans-serif;font-size:80px;line-height:1;opacity:0.06;position:absolute;right:20px;top:10px;}
+  [dir="rtl"] .day-number{right:auto;left:20px;}
+  .day-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--muted);margin-bottom:6px;}
+  [dir="rtl"] .day-label{font-family:'Cairo',sans-serif;letter-spacing:0;font-size:12px;}
+  .day-title{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:2px;line-height:1;}
+  [dir="rtl"] .day-title{font-family:'Cairo',sans-serif;font-weight:700;letter-spacing:0;font-size:28px;}
+  .day-card:nth-child(1) .day-title{color:var(--day1);}
+  .day-card:nth-child(2) .day-title{color:var(--day2);}
+  .day-card:nth-child(3) .day-title{color:var(--day3);}
+  .day-focus{font-size:12px;color:var(--muted);margin-top:6px;font-weight:300;}
+
+  .exercise-list{padding:0 0 8px;}
+  .exercise-row{display:grid;grid-template-columns:1fr auto auto auto;align-items:center;gap:12px;padding:14px 28px;border-bottom:1px solid rgba(255,255,255,0.04);transition:background 0.2s;}
+  .exercise-row:hover{background:rgba(255,255,255,0.02);}
+  .exercise-row:last-child{border-bottom:none;}
+  .ex-name{font-size:14px;font-weight:500;color:var(--text);}
+  .ex-muscle{font-size:10px;color:var(--muted);font-family:'Space Mono',monospace;margin-top:2px;}
+  [dir="rtl"] .ex-muscle{font-family:'Cairo',sans-serif;font-size:11px;}
+  .ex-sets,.ex-reps,.ex-rest{text-align:center;font-family:'Space Mono',monospace;}
+  .ex-val{font-size:15px;font-weight:700;color:var(--text);}
+  .ex-unit{font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
+  [dir="rtl"] .ex-unit{font-family:'Cairo',sans-serif;letter-spacing:0;font-size:10px;}
+
+  .table-header{display:grid;grid-template-columns:1fr auto auto auto;gap:12px;padding:10px 28px;background:rgba(255,255,255,0.02);border-bottom:1px solid var(--border);}
+  .th{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;text-align:center;}
+  [dir="rtl"] .th{font-family:'Cairo',sans-serif;letter-spacing:0;font-size:11px;}
+  .th:first-child{text-align:left;}
+  [dir="rtl"] .th:first-child{text-align:right;}
+
+  .accent-bar{height:3px;width:100%;}
+  .day-card:nth-child(1) .accent-bar{background:var(--day1);}
+  .day-card:nth-child(2) .accent-bar{background:var(--day2);}
+  .day-card:nth-child(3) .accent-bar{background:var(--day3);}
+
+  .freq-section{margin-bottom:60px;}
+  .freq-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2px;background:var(--border);}
+  .freq-card{background:var(--card);padding:20px 24px;display:flex;justify-content:space-between;align-items:center;}
+  .freq-muscle{font-size:13px;font-weight:500;}
+  .freq-count{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--accent);}
+  .freq-label{font-family:'Space Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;}
+  [dir="rtl"] .freq-label{font-family:'Cairo',sans-serif;letter-spacing:0;font-size:11px;}
+
+  .prog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;background:var(--border);margin-bottom:60px;}
+  .prog-card{background:var(--card);padding:28px;}
+  .prog-week{font-family:'Bebas Neue',sans-serif;font-size:48px;line-height:1;color:var(--accent);margin-bottom:8px;}
+  [dir="rtl"] .prog-week{font-family:'Cairo',sans-serif;font-weight:700;}
+  .prog-title{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:12px;}
+  [dir="rtl"] .prog-title{font-family:'Cairo',sans-serif;letter-spacing:0;font-size:12px;}
+  .prog-desc{font-size:13px;color:var(--text);line-height:1.7;font-weight:300;}
+  .prog-desc li{padding:4px 0;padding-left:14px;position:relative;list-style:none;}
+  [dir="rtl"] .prog-desc li{padding-left:0;padding-right:14px;}
+  .prog-desc li::before{content:'→';position:absolute;left:0;color:var(--accent);font-size:11px;}
+  [dir="rtl"] .prog-desc li::before{left:auto;right:0;content:'←';}
+
+  .rest-bar{background:var(--card);border:1px solid var(--border);padding:20px 28px;display:flex;align-items:center;justify-content:space-between;margin-bottom:60px;flex-wrap:wrap;gap:16px;}
+  .rest-info{font-size:13px;color:var(--muted);font-weight:300;max-width:600px;line-height:1.6;}
+  .rest-schedule{display:flex;gap:4px;}
+  .day-dot{width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:10px;border:1px solid var(--border);color:var(--muted);}
+  .day-dot.active-1{border-color:var(--day1);color:var(--day1);background:rgba(232,255,59,0.07);}
+  .day-dot.active-2{border-color:var(--day2);color:var(--day2);background:rgba(255,79,59,0.07);}
+  .day-dot.active-3{border-color:var(--day3);color:var(--day3);background:rgba(59,255,212,0.07);}
+
+  /* ============================
+     NUTRITION CALCULATOR STYLES
+     ============================ */
+  .calc-section{margin-bottom:60px;}
+  .calc-wrapper{background:var(--card);border:1px solid var(--border);overflow:hidden;}
+  .calc-top-bar{background:var(--accent);padding:16px 28px;display:flex;align-items:center;gap:12px;}
+  .calc-top-bar-icon{font-size:22px;}
+  .calc-top-bar-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:#000;}
+  [dir="rtl"] .calc-top-bar-title{font-family:'Cairo',sans-serif;font-size:22px;letter-spacing:0;}
+  .calc-top-bar-sub{font-size:12px;color:rgba(0,0,0,0.6);margin-top:2px;font-weight:300;}
+  [dir="rtl"] .calc-top-bar-sub{font-family:'Cairo',sans-serif;}
+
+  .calc-inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:2px;background:var(--border);border-bottom:1px solid var(--border);}
+  .calc-field{background:var(--bg);padding:20px 24px;}
+  .calc-field-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:10px;display:block;}
+  [dir="rtl"] .calc-field-label{font-family:'Cairo',sans-serif;letter-spacing:0;font-size:11px;}
+  .calc-field input,.calc-field select{width:100%;background:var(--card);border:1px solid var(--border);color:var(--text);font-family:'Space Mono',monospace;font-size:14px;padding:10px 12px;outline:none;transition:border-color 0.2s;-webkit-appearance:none;appearance:none;}
+  [dir="rtl"] .calc-field input,[dir="rtl"] .calc-field select{font-family:'Cairo',sans-serif;font-size:14px;}
+  .calc-field input:focus,.calc-field select:focus{border-color:var(--accent);}
+  .calc-field select option{background:var(--card);}
+
+  .calc-field-row{display:flex;gap:2px;background:var(--border);}
+  .calc-segment{flex:1;background:var(--bg);padding:20px 24px;}
+  .seg-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:10px;display:block;}
+  [dir="rtl"] .seg-label{font-family:'Cairo',sans-serif;letter-spacing:0;font-size:11px;}
+
+  .calc-btn-row{padding:20px 24px;background:var(--bg);border-top:1px solid var(--border);}
+  .calc-btn{background:var(--accent);color:#000;border:none;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;padding:14px 40px;cursor:pointer;transition:all 0.2s;width:100%;}
+  [dir="rtl"] .calc-btn{font-family:'Cairo',sans-serif;font-weight:700;font-size:18px;letter-spacing:0;}
+  .calc-btn:hover{background:#fff;transform:translateY(-1px);}
+
+  .calc-results{display:none;border-top:1px solid var(--border);}
+  .calc-results.visible{display:block;}
+
+  .result-hero{padding:32px 28px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap;}
+  .result-kcal-block{flex:0 0 auto;}
+  .result-kcal-num{font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:1;color:var(--accent);}
+  [dir="rtl"] .result-kcal-num{font-family:'Cairo',sans-serif;font-weight:700;}
+  .result-kcal-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+  [dir="rtl"] .result-kcal-label{font-family:'Cairo',sans-serif;letter-spacing:0;}
+  .result-bmr-block{flex:1;min-width:200px;}
+  .result-bmr-row{font-size:13px;color:var(--muted);margin-bottom:6px;line-height:1.5;}
+  .result-bmr-row strong{color:var(--text);}
+  .result-formula-badge{display:inline-block;background:rgba(232,255,59,0.1);border:1px solid rgba(232,255,59,0.3);color:var(--accent);font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;padding:3px 8px;margin-top:8px;}
+  [dir="rtl"] .result-formula-badge{font-family:'Cairo',sans-serif;letter-spacing:0;font-size:11px;}
+
+  .macro-bars{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;background:var(--border);border-top:1px solid var(--border);}
+  .macro-card{background:var(--card);padding:24px 28px;}
+  .macro-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;}
+  .macro-name{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+  [dir="rtl"] .macro-name{font-family:'Cairo',sans-serif;letter-spacing:0;font-size:12px;}
+  .macro-gram{font-family:'Bebas Neue',sans-serif;font-size:40px;line-height:1;}
+  [dir="rtl"] .macro-gram{font-family:'Cairo',sans-serif;font-weight:700;}
+  .macro-gram-unit{font-size:12px;color:var(--muted);font-family:'Space Mono',monospace;}
+  [dir="rtl"] .macro-gram-unit{font-family:'Cairo',sans-serif;}
+  .macro-bar-track{height:4px;background:var(--border);width:100%;margin-bottom:8px;overflow:hidden;}
+  .macro-bar-fill{height:100%;transition:width 0.8s ease;}
+  .macro-kcal-sub{font-size:11px;color:var(--muted);}
+  .macro-card.protein .macro-gram{color:var(--day3);}
+  .macro-card.protein .macro-bar-fill{background:var(--day3);}
+  .macro-card.carbs .macro-gram{color:var(--day1);}
+  .macro-card.carbs .macro-bar-fill{background:var(--day1);}
+  .macro-card.fat .macro-gram{color:var(--day2);}
+  .macro-card.fat .macro-bar-fill{background:var(--day2);}
+
+  .calc-note{padding:16px 28px;background:rgba(232,255,59,0.04);border-top:1px solid rgba(232,255,59,0.1);font-size:12px;color:var(--muted);line-height:1.6;}
+  [dir="rtl"] .calc-note{font-family:'Cairo',sans-serif;font-size:13px;}
+
+  footer{padding:32px 40px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  .footer-note{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;line-height:1.8;}
+  [dir="rtl"] .footer-note{font-family:'Cairo',sans-serif;letter-spacing:0;font-size:12px;}
+  .footer-brand{font-family:'Bebas Neue',sans-serif;font-size:28px;color:rgba(255,255,255,0.06);letter-spacing:4px;}
+
+  @media(max-width:600px){
+    header,main,footer{padding:24px 20px;}
+    .days-grid{grid-template-columns:1fr;}
+    .exercise-row{grid-template-columns:1fr auto auto;}
+    .ex-rest{display:none;}
+    .lang-switcher{top:10px;right:10px;}
+    [dir="rtl"] .lang-switcher{right:auto;left:10px;}
+    .result-kcal-num{font-size:52px;}
+  }
+</style>
+</head>
+<body class="lang-en">
+
+<div class="lang-switcher">
+  <button class="lang-btn active" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" onclick="setLang('ar')">AR</button>
+  <button class="lang-btn" onclick="setLang('es')">ES</button>
+  <button class="lang-btn" onclick="setLang('de')">DE</button>
+</div>
+
+<!-- ACTION BAR: Download + PWA Install -->
+<div class="action-bar">
+  <button class="pwa-btn" id="pwaInstallBtn" onclick="installPWA()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="7" x2="12" y2="14"/><polyline points="9 11 12 14 15 11"/><line x1="8" y1="18" x2="16" y2="18"/></svg>
+    <span id="pwaLabel">Install as App</span>
+  </button>
+  <button class="dl-btn" onclick="downloadHTML()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+    <span id="dlLabel">Download for Offline</span>
+  </button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<header data-bg-word="LIFT">
+  <p class="tag" data-i18n="tag">Science-Based Program · Full Body · 3 Days/Week</p>
+  <h1 data-i18n="h1">FULL BODY<br><span>HYPERTROPHY</span></h1>
+  <div class="header-meta">
+    <div class="meta-pill" data-i18n="meta_level">LEVEL <strong>Beginner</strong></div>
+    <div class="meta-pill" data-i18n="meta_goal">GOAL <strong>Muscle Growth</strong></div>
+    <div class="meta-pill" data-i18n="meta_freq">FREQUENCY <strong>2× per muscle/week</strong></div>
+    <div class="meta-pill" data-i18n="meta_equip">EQUIPMENT <strong>Full Gym</strong></div>
+    <div class="meta-pill" data-i18n="meta_dur">DURATION <strong>60–75 min/session</strong></div>
+  </div>
+</header>
+
+<div class="principles">
+  <div class="principle"><div class="principle-icon">🧬</div><div class="principle-title" data-i18n="p1_title">Frequency</div><div class="principle-val" data-i18n="p1_val">Each muscle trained 2×/week — optimal for beginner protein synthesis windows</div></div>
+  <div class="principle"><div class="principle-icon">📐</div><div class="principle-title" data-i18n="p2_title">Volume</div><div class="principle-val" data-i18n="p2_val">10–14 sets per muscle/week — within MEV–MAV range for beginners</div></div>
+  <div class="principle"><div class="principle-icon">🎯</div><div class="principle-title" data-i18n="p3_title">Rep Ranges</div><div class="principle-val" data-i18n="p3_val">6–12 reps — maximizes mechanical tension &amp; metabolic stress</div></div>
+  <div class="principle"><div class="principle-icon">📈</div><div class="principle-title" data-i18n="p4_title">Progression</div><div class="principle-val" data-i18n="p4_val">Double progression — add reps first, then weight (linear overload)</div></div>
+</div>
+
+<main>
+  <p class="section-label" data-i18n="sec_training">Training Days</p>
+  <div class="days-grid">
+    <!-- DAY A -->
+    <div class="day-card">
+      <div class="accent-bar"></div>
+      <div class="day-header">
+        <div class="day-number">A</div>
+        <div class="day-label" data-i18n="day1_label">Day 01</div>
+        <div class="day-title" data-i18n="day1_title">DAY A</div>
+        <div class="day-focus" data-i18n="day1_focus">Push-focused compounds · Mon / recommended</div>
+      </div>
+      <div class="table-header"><span class="th" data-i18n="th_exercise">Exercise</span><span class="th" data-i18n="th_sets">Sets</span><span class="th" data-i18n="th_reps">Reps</span><span class="th" data-i18n="th_rest">Rest</span></div>
+      <div class="exercise-list">
+        <div class="exercise-row"><div><div class="ex-name" data-i18n="a1_name">Barbell Back Squat</div><div class="ex-muscle" data-i18n="a1_muscle">Quads · Glutes · Core</div></div><div class="ex-sets"><div class="ex-val">3</div><div class="ex-unit" data-i18n="u_sets">sets</div></div><div class="ex-reps"><div class="ex-val">8–10</div><div class="ex-unit" data-i18n="u_reps">reps</div></div><div class="ex-rest"><div class="ex-val">2:30</div><div class="ex-unit" data-i18n="u_rest">rest</div></div></div>
+        <div class="exercise-row"><div><div class="ex-name" data-i18n="a2_name">Barbell Bench Press</div><div class="ex-muscle" data-i18n="a2_muscle">Chest · Front Delt · Triceps</div></div><div class="ex-sets"><div class="ex-val">3</div><div class="ex-unit" data-i18n="u_sets">sets</div></div><div class="ex-reps"><div class="ex-val">8–10</div><div class="ex-unit" data-i18n="u_reps">reps</div></div><div class="ex-rest"><div class="ex-val">2:00</div><div class="ex-unit" data-i18n="u_rest">rest</div></div></div>
+        <div class="exercise-row"><div><div class="ex-name" data-i18n="a3_name">Barbell Romanian Deadlift</div><div class="ex-muscle" data-i18n="a3_muscle">Hamstrings · Glutes · Erectors</div></div><div class="ex-sets"><div class="ex-val">3</div><div class="ex-unit" data-i18n="u_sets">sets</div></div><div class="ex-reps"><div class="ex-val">10–12</div><div class="ex-unit" data-i18n="u_reps">reps</div></div><div class="ex-rest"><div class="ex-val">2:00</div><div class="ex-unit" data-i18n="u_rest">rest</div></div></div>
+        <div class="exercise-row"><div><div class="ex-name" data-i18n="a4_name">Seated DB Shoulder Press</div><div class="ex-muscle" data-i18n="a4_muscle">Anterior · Medial Delt · Triceps</div></div><div class="ex-sets"><div class="ex-val">3</div><div class="ex-unit" data-i18n="u_sets">sets</div></div><div class="ex-reps"><div class="ex-val">10–12</div><div class="ex-unit" data-i18n="u_reps">reps</div></div><div class="ex-rest"><div class="ex-val">1:30</div><div class="ex-unit" data-i18n="u_rest">rest</div></div></div>
+        <div class="exercise-row"><div><div class="ex-name" data-i18n="a5_name">Cable Lat Pulldown</div><div class="ex-muscle" data-i18n="a5_muscle">Lats · Biceps · Rear Delt</div></div><div class="ex-sets"><div class="ex-val">3</div><div class="ex-unit" data-i18n="u_sets">sets</div></div><div class="ex-reps"><div class="ex-val">10–12</div><div class="ex-unit" data-i18n="u_reps">reps</div></div><div class="ex-rest"><div class="ex-val">1:30</div><div class="ex-unit" data-i18n="u_rest">rest</div></div></div>
+        <div class="exercise-row"><div><div class="ex-name" data-i18n="a6_name">Cable Tricep Pushdown</div><div class="ex-muscle" data-i18n="a6_muscle">Triceps long + lateral head</div></div><div class="ex-sets"><div class="ex-val">2</div><div class="ex-unit" data-i18n="u_sets">sets</div></div><div class="ex-reps"><div class="ex-val">12–15</div><div class="ex-unit" data-i18n="u_reps">reps</div></div><div class="ex-rest"><div class="ex-val">1:00</div><div class="ex-unit" data-i18n="u_rest">rest</div></div></div>
+        <div class="exercise-row"><div><div class="ex-name" data-i18n="a7_name">DB Bicep Curl</div><div class="ex-muscle" data-i18n="a7_muscle">Biceps brachii · Brachialis</div></div><div class="ex-sets"><div class="ex-val">2</div><div class="ex-unit" data-i18n="u_sets">sets</div></div><div class="ex-reps"><div class="ex-val">12–15</div><div class="ex-unit" data-i18n="u_reps">reps</div></div><div class="ex-rest"><div class="ex-val">1:00</div><div class="ex-unit" data-i18n="u_rest">rest</div></div></div>
+      </div>
+    </div>
+    <!-- DAY B -->
+    <div class="day-card">
+      <div class="accent-bar"></div>
+      <div class="day-header">
+        <div class="day-number">B</div>
+        <div class="day-label" data-i18n="day2_label">Day 02</div>
+        <div class="day-title" data-i18n="day2_title">DAY B</div>
+        <div class="day-focus" data-i18n="day2_focus">Pull-focused compounds · Wed / recommended</div>
+      </div>
+      <div class="table-header"><span class="th" data-i18n="th_exercise">Exercise</span><span class="th" data-i18n="th_sets">Sets</span><span class="th" data-i18n="th_reps">Reps</span><span class="th" data-i18n="th_rest">Rest</span></div>
+      <div class="exercise-list">
+        <div class="exercise-row"><div><div class="ex-name" data-i18n="b1_name">Leg Press</div><div class="ex-muscle" data-i18n="b1_muscle">Quads · Glutes</div></div><div class="ex-sets"><div class="ex-val">3</div><div class="ex-unit" data-i18n="u_sets">sets</div></div><div class="ex-reps"><div class="ex-val">10–12</div><div class="ex-unit" data-i18n="u_reps">reps</div></div><div class="ex-rest"><div class="ex-val">2:00</div><div class="ex-unit" data-i18n="u_rest">rest</div></div></div>
+        <div class="exercise-row"><div><div class="ex-name" data-i18n="b2_name">Barbell Bent-Over Row</div><div class="ex-muscle" data-i18n="b2_muscle">Lats · Traps · Rear Delt · Biceps</div></div><div class="ex-sets"><div class="ex-val">3</div><div class="ex-unit" data-i18n="u_sets">sets</div></div><div class="ex-reps"><div class="ex-val">8–10</div><div class="ex-unit" data-i18n="u_reps">reps</div></div><div class="ex-rest"><div class="ex-val">2:00</div><div class="ex-unit" data-i18n="u_rest">rest</div></div></div>
+        <div class="exercise-row"><div><div class="ex-name" data-i18n="b3_name">DB Incline Press</div><div class="ex-muscle" data-i18n="b3_muscle">Upper Chest · Front Delt · Triceps</div></div><div class="ex-sets"><div class="ex-val">3</div><div class="ex-unit" data-i18n="u_sets">sets</div></div><div class="ex-reps"><div class="ex-val">10–12</div><div class="ex-unit" data-i18n="u_reps">reps</div></div><div class="ex-rest"><div class="ex-val">1:30</div><div class="ex-unit" data-i18n="u_rest">rest</div></div></div>
+        <div class="exercise-row"><div><div class="ex-name" data-i18n="b4_name">Cable Face Pull</div><div class="ex-muscle" data-i18n="b4_muscle">Rear Delt · External Rotators</div></div><div class="ex-sets"><div class="ex-val">3</div><div class="ex-unit" data-i18n="u_sets">sets</div></div><div class="ex-reps"><div class="ex-val">15–20</div><div class="ex-unit" data-i18n="u_reps">reps</div></div><div class="ex-rest"><div class="ex-val">1:00</div><div class="ex-unit" data-i18n="u_rest">rest</div></div></div>
+        <div class="exercise-row"><div><div class="ex-name" data-i18n="b5_name">Leg Curl Machine</div><div class="ex-muscle" data-i18n="b5_muscle">Hamstrings isolated</div></div><div class="ex-sets"><div class="ex-val">3</div><div class="ex-unit" data-i18n="u_sets">sets</div></div><div class="ex-reps"><div class="ex-val">10–12</div><div class="ex-unit" data-i18n="u_reps">reps</div></div><div class="ex-rest"><div class="ex-val">1:30</div><div class="ex-unit" data-i18n="u_rest">rest</div></div></div>
+        <div class="exercise-row"><div><div class="ex-name" data-i18n="b6_name">Lateral Raise (DB or Cable)</div><div class="ex-muscle" data-i18n="b6_muscle">Medial Deltoid</div></div><div class="ex-sets"><div class="ex-val">3</div><div class="ex-unit" data-i18n="u_sets">sets</div></div><div class="ex-reps"><div class="ex-val">15–20</div><div class="ex-unit" data-i18n="u_reps">reps</div></div><div class="ex-rest"><div class="ex-val">1:00</div><div class="ex-unit" data-i18n="u_rest">rest</div></div></div>
+        <div class="exercise-row"><div><div class="ex-name" data-i18n="b7_name">Plank</div><div class="ex-muscle" data-i18n="b7_muscle">Core · Anterior chain</div></div><div class="ex-sets"><div class="ex-val">3</div><div class="ex-unit" data-i18n="u_sets">sets</div></div><div class="ex-reps"><div class="ex-val">30–45s</div><div class="ex-unit" data-i18n="u_hold">hold</div></div><div class="ex-rest"><div class="ex-val">1:00</div><div class="ex-unit" data-i18n="u_rest">rest</div></div></div>
+      </div>
+    </div>
+    <!-- DAY C -->
+    <div class="day-card">
+      <div class="accent-bar"></div>
+      <div class="day-header">
+        <div class="day-number">C</div>
+        <div class="day-label" data-i18n="day3_label">Day 03</div>
+        <div class="day-title" data-i18n="day3_title">DAY C</div>
+        <div class="day-focus" data-i18n="day3_focus">Variation compounds · Fri / recommended</div>
+      </div>
+      <div class="table-header"><span class="th" data-i18n="th_exercise">Exercise</span><span class="th" data-i18n="th_sets">Sets</span><span class="th" data-i18n="th_reps">Reps</span><span class="th" data-i18n="th_rest">Rest</span></div>
+      <div class="exercise-list">
+        <div class="exercise-row"><div><div class="ex-name" data-i18n="c1_name">Deadlift (Conventional)</div><div class="ex-muscle" data-i18n="c1_muscle">Full Posterior Chain · Traps</div></div><div class="ex-sets"><div class="ex-val">3</div><div class="ex-unit" data-i18n="u_sets">sets</div></div><div class="ex-reps"><div class="ex-val">6–8</div><div class="ex-unit" data-i18n="u_reps">reps</div></div><div class="ex-rest"><div class="ex-val">3:00</div><div class="ex-unit" data-i18n="u_rest">rest</div></div></div>
+        <div class="exercise-row"><div><div class="ex-name" data-i18n="c2_name">DB Lunges (walking)</div><div class="ex-muscle" data-i18n="c2_muscle">Quads · Glutes · Adductors</div></div><div class="ex-sets"><div class="ex-val">3</div><div class="ex-unit" data-i18n="u_sets">sets</div></div><div class="ex-reps"><div class="ex-val">10 ea</div><div class="ex-unit" data-i18n="u_perleg">per leg</div></div><div class="ex-rest"><div class="ex-val">1:30</div><div class="ex-unit" data-i18n="u_rest">rest</div></div></div>
+        <div class="exercise-row"><div><div class="ex-name" data-i18n="c3_name">Cable Chest Fly</div><div class="ex-muscle" data-i18n="c3_muscle">Chest · Anterior Delt</div></div><div class="ex-sets"><div class="ex-val">3</div><div class="ex-unit" data-i18n="u_sets">sets</div></div><div class="ex-reps"><div class="ex-val">12–15</div><div class="ex-unit" data-i18n="u_reps">reps</div></div><div class="ex-rest"><div class="ex-val">1:00</div><div class="ex-unit" data-i18n="u_rest">rest</div></div></div>
+        <div class="exercise-row"><div><div class="ex-name" data-i18n="c4_name">Seated Cable Row</div><div class="ex-muscle" data-i18n="c4_muscle">Mid-Back · Lats · Biceps</div></div><div class="ex-sets"><div class="ex-val">3</div><div class="ex-unit" data-i18n="u_sets">sets</div></div><div class="ex-reps"><div class="ex-val">10–12</div><div class="ex-unit" data-i18n="u_reps">reps</div></div><div class="ex-rest"><div class="ex-val">1:30</div><div class="ex-unit" data-i18n="u_rest">rest</div></div></div>
+        <div class="exercise-row"><div><div class="ex-name" data-i18n="c5_name">Leg Extension Machine</div><div class="ex-muscle" data-i18n="c5_muscle">Quad isolation — VMO</div></div><div class="ex-sets"><div class="ex-val">3</div><div class="ex-unit" data-i18n="u_sets">sets</div></div><div class="ex-reps"><div class="ex-val">12–15</div><div class="ex-unit" data-i18n="u_reps">reps</div></div><div class="ex-rest"><div class="ex-val">1:00</div><div class="ex-unit" data-i18n="u_rest">rest</div></div></div>
+        <div class="exercise-row"><div><div class="ex-name" data-i18n="c6_name">EZ Bar Skull Crusher</div><div class="ex-muscle" data-i18n="c6_muscle">Triceps long head</div></div><div class="ex-sets"><div class="ex-val">2</div><div class="ex-unit" data-i18n="u_sets">sets</div></div><div class="ex-reps"><div class="ex-val">10–12</div><div class="ex-unit" data-i18n="u_reps">reps</div></div><div class="ex-rest"><div class="ex-val">1:00</div><div class="ex-unit" data-i18n="u_rest">rest</div></div></div>
+        <div class="exercise-row"><div><div class="ex-name" data-i18n="c7_name">Incline DB Curl</div><div class="ex-muscle" data-i18n="c7_muscle">Biceps — long head stretch</div></div><div class="ex-sets"><div class="ex-val">2</div><div class="ex-unit" data-i18n="u_sets">sets</div></div><div class="ex-reps"><div class="ex-val">10–12</div><div class="ex-unit" data-i18n="u_reps">reps</div></div><div class="ex-rest"><div class="ex-val">1:00</div><div class="ex-unit" data-i18n="u_rest">rest</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label" data-i18n="sec_schedule">Weekly Schedule</p>
+  <div class="rest-bar">
+    <div class="rest-info" data-i18n="schedule_info">Train Mon/Wed/Fri with full rest days in between. At minimum, keep <strong>1 rest day</strong> between each session. Weekend rest is ideal — muscle growth happens during recovery, not during training.</div>
+    <div class="rest-schedule">
+      <div class="day-dot active-1" data-i18n="d_mon">MON</div>
+      <div class="day-dot" data-i18n="d_tue">TUE</div>
+      <div class="day-dot active-2" data-i18n="d_wed">WED</div>
+      <div class="day-dot" data-i18n="d_thu">THU</div>
+      <div class="day-dot active-3" data-i18n="d_fri">FRI</div>
+      <div class="day-dot" data-i18n="d_sat">SAT</div>
+      <div class="day-dot" data-i18n="d_sun">SUN</div>
+    </div>
+  </div>
+
+  <p class="section-label" data-i18n="sec_freq">Muscle Group Frequency / Week</p>
+  <div class="freq-section">
+    <div class="freq-grid">
+      <div class="freq-card"><div><div class="freq-muscle" data-i18n="m_chest">Chest</div><div class="freq-label" data-i18n="f_sets9">sets/week ≈ 9</div></div><div><div class="freq-count">2×</div></div></div>
+      <div class="freq-card"><div><div class="freq-muscle" data-i18n="m_back">Back (Lats)</div><div class="freq-label" data-i18n="f_sets9">sets/week ≈ 9</div></div><div><div class="freq-count">2×</div></div></div>
+      <div class="freq-card"><div><div class="freq-muscle" data-i18n="m_shoulders">Shoulders</div><div class="freq-label" data-i18n="f_sets9">sets/week ≈ 9</div></div><div><div class="freq-count">2×</div></div></div>
+      <div class="freq-card"><div><div class="freq-muscle" data-i18n="m_quads">Quads</div><div class="freq-label" data-i18n="f_sets9">sets/week ≈ 9</div></div><div><div class="freq-count">2×</div></div></div>
+      <div class="freq-card"><div><div class="freq-muscle" data-i18n="m_hamstrings">Hamstrings</div><div class="freq-label" data-i18n="f_sets9">sets/week ≈ 9</div></div><div><div class="freq-count">2×</div></div></div>
+      <div class="freq-card"><div><div class="freq-muscle" data-i18n="m_biceps">Biceps</div><div class="freq-label" data-i18n="f_sets6">sets/week ≈ 6</div></div><div><div class="freq-count">2×</div></div></div>
+      <div class="freq-card"><div><div class="freq-muscle" data-i18n="m_triceps">Triceps</div><div class="freq-label" data-i18n="f_sets8">sets/week ≈ 8</div></div><div><div class="freq-count">2×</div></div></div>
+      <div class="freq-card"><div><div class="freq-muscle" data-i18n="m_glutes">Glutes</div><div class="freq-label" data-i18n="f_sets9">sets/week ≈ 9</div></div><div><div class="freq-count">2×</div></div></div>
+    </div>
+  </div>
+
+  <p class="section-label" data-i18n="sec_prog">Progression Model (Double Progression)</p>
+  <div class="prog-grid">
+    <div class="prog-card"><div class="prog-week" data-i18n="pw1">W1–2</div><div class="prog-title" data-i18n="pt1">Learn the movements</div><ul class="prog-desc"><li data-i18n="pl1_1">Start light — technique first, always</li><li data-i18n="pl1_2">Hit the bottom of every rep range (e.g. 8 reps)</li><li data-i18n="pl1_3">Focus on mind-muscle connection</li></ul></div>
+    <div class="prog-card"><div class="prog-week" data-i18n="pw2">W3–4</div><div class="prog-title" data-i18n="pt2">Add reps first</div><ul class="prog-desc"><li data-i18n="pl2_1">Push toward top of rep range (e.g. 10 reps)</li><li data-i18n="pl2_2">Keep same weight until you hit top range on all sets</li><li data-i18n="pl2_3">Last set should be RPE 8–9 (2 reps left in tank)</li></ul></div>
+    <div class="prog-card"><div class="prog-week" data-i18n="pw3">W5+</div><div class="prog-title" data-i18n="pt3">Add weight, reset reps</div><ul class="prog-desc"><li data-i18n="pl3_1">Add 2.5–5 kg to upper body, 5 kg to lower</li><li data-i18n="pl3_2">Drop back to bottom of rep range</li><li data-i18n="pl3_3">Repeat the cycle — this is linear overload</li></ul></div>
+    <div class="prog-card"><div class="prog-week" data-i18n="pw4">W9+</div><div class="prog-title" data-i18n="pt4">Deload if needed</div><ul class="prog-desc"><li data-i18n="pl4_1">Every 8–12 weeks: reduce weight 40–50% for 1 week</li><li data-i18n="pl4_2">Protects joints and resets CNS fatigue</li><li data-i18n="pl4_3">You'll come back stronger — not weaker</li></ul></div>
+  </div>
+
+  <!-- ========================
+       NUTRITION CALCULATOR
+       ======================== -->
+  <p class="section-label" data-i18n="sec_calc">Nutrition &amp; Macro Calculator</p>
+  <div class="calc-section">
+    <div class="calc-wrapper">
+      <div class="calc-top-bar">
+        <div class="calc-top-bar-icon">🧮</div>
+        <div>
+          <div class="calc-top-bar-title" data-i18n="calc_title">MACRO CALCULATOR</div>
+          <div class="calc-top-bar-sub" data-i18n="calc_sub">Mifflin–St Jeor BMR · Harris-Benedict Activity · Science-based macros for muscle gain</div>
+        </div>
+      </div>
+
+      <div class="calc-inputs">
+        <div class="calc-field">
+          <label class="calc-field-label" data-i18n="calc_age">Age (years)</label>
+          <input type="number" id="c_age" min="15" max="80" placeholder="25">
+        </div>
+        <div class="calc-field">
+          <label class="calc-field-label" data-i18n="calc_weight">Body Weight (kg)</label>
+          <input type="number" id="c_weight" min="30" max="250" placeholder="75">
+        </div>
+        <div class="calc-field">
+          <label class="calc-field-label" data-i18n="calc_height">Height (cm)</label>
+          <input type="number" id="c_height" min="100" max="250" placeholder="175">
+        </div>
+        <div class="calc-field">
+          <label class="calc-field-label" data-i18n="calc_sex">Biological Sex</label>
+          <select id="c_sex">
+            <option value="m" data-i18n-opt="calc_male">Male</option>
+            <option value="f" data-i18n-opt="calc_female">Female</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label class="calc-field-label" data-i18n="calc_activity">Activity Level</label>
+          <select id="c_activity">
+            <option value="1.2" data-i18n-opt="act_sed">Sedentary (desk job, no exercise)</option>
+            <option value="1.375" data-i18n-opt="act_light">Lightly Active (1–3 days/week)</option>
+            <option value="1.55" selected="" data-i18n-opt="act_mod">Moderately Active (3 days/week — you)</option>
+            <option value="1.725" data-i18n-opt="act_active">Very Active (5–6 days/week)</option>
+            <option value="1.9" data-i18n-opt="act_very">Athlete (2× daily training)</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label class="calc-field-label" data-i18n="calc_goal_lbl">Goal</label>
+          <select id="c_goaltype">
+            <option value="bulk" data-i18n-opt="goal_bulk">Muscle Gain (+250 kcal surplus)</option>
+            <option value="maintain" data-i18n-opt="goal_maintain">Maintain / Recomp</option>
+            <option value="cut" data-i18n-opt="goal_cut">Fat Loss (−300 kcal deficit)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="calc-btn-row">
+        <button class="calc-btn" onclick="calcNutrition()" data-i18n="calc_btn">CALCULATE MY MACROS</button>
+      </div>
+
+      <div class="calc-results" id="calcResults">
+        <div class="result-hero">
+          <div class="result-kcal-block">
+            <div class="result-kcal-num" id="r_tdee">—</div>
+            <div class="result-kcal-label" data-i18n="r_kcal_label">DAILY TARGET CALORIES</div>
+          </div>
+          <div class="result-bmr-block">
+            <div class="result-bmr-row"><span data-i18n="r_bmr_label">Basal Metabolic Rate (BMR)</span>: <strong id="r_bmr">—</strong> kcal</div>
+            <div class="result-bmr-row"><span data-i18n="r_activity_label">Activity Multiplier</span>: <strong id="r_activity_factor">—</strong></div>
+            <div class="result-bmr-row"><span data-i18n="r_goal_adj">Goal Adjustment</span>: <strong id="r_goal_text">—</strong></div>
+            <div class="result-formula-badge" data-i18n="r_formula">Mifflin–St Jeor Formula</div>
+          </div>
+        </div>
+        <div class="macro-bars">
+          <div class="macro-card protein">
+            <div class="macro-header">
+              <div><div class="macro-name" data-i18n="r_protein">Protein</div><div class="macro-gram-unit">g / day</div></div>
+              <div class="macro-gram" id="r_protein_g">—</div>
+            </div>
+            <div class="macro-bar-track"><div class="macro-bar-fill" id="r_protein_bar" style="width:0%"></div></div>
+            <div class="macro-kcal-sub" id="r_protein_kcal">—</div>
+          </div>
+          <div class="macro-card carbs">
+            <div class="macro-header">
+              <div><div class="macro-name" data-i18n="r_carbs">Carbohydrates</div><div class="macro-gram-unit">g / day</div></div>
+              <div class="macro-gram" id="r_carbs_g">—</div>
+            </div>
+            <div class="macro-bar-track"><div class="macro-bar-fill" id="r_carbs_bar" style="width:0%"></div></div>
+            <div class="macro-kcal-sub" id="r_carbs_kcal">—</div>
+          </div>
+          <div class="macro-card fat">
+            <div class="macro-header">
+              <div><div class="macro-name" data-i18n="r_fat">Fat</div><div class="macro-gram-unit">g / day</div></div>
+              <div class="macro-gram" id="r_fat_g">—</div>
+            </div>
+            <div class="macro-bar-track"><div class="macro-bar-fill" id="r_fat_bar" style="width:0%"></div></div>
+            <div class="macro-kcal-sub" id="r_fat_kcal">—</div>
+          </div>
+        </div>
+        <div class="calc-note" data-i18n="calc_note">📌 Protein: 2.0g/kg (high end for muscle gain) · Fats: 25% of total calories · Carbs: remainder. Adjust ±100 kcal after 2 weeks if body weight isn't tracking as expected. These are starting targets — individual response varies.</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-note" data-i18n="footer_note">WARM UP: 5–10 min light cardio + 1–2 warm-up sets per compound lift<br>NUTRITION: Eat in slight caloric surplus (+200–300 kcal) · 1.6–2.2g protein per kg bodyweight<br>SLEEP: 7–9 hours — the most anabolic activity you can do</div>
+  <div class="footer-brand">HYPERTROPHY</div>
+</footer>
+
+<script>
+// ==================== TRANSLATIONS ====================
+const T = {
+  en: {
+    tag:"Science-Based Program · Full Body · 3 Days/Week",
+    h1:"FULL BODY<br><span>HYPERTROPHY</span>",
+    meta_level:"LEVEL <strong>Beginner</strong>",meta_goal:"GOAL <strong>Muscle Growth</strong>",meta_freq:"FREQUENCY <strong>2× per muscle/week</strong>",meta_equip:"EQUIPMENT <strong>Full Gym</strong>",meta_dur:"DURATION <strong>60–75 min/session</strong>",
+    p1_title:"Frequency",p1_val:"Each muscle trained 2×/week — optimal for beginner protein synthesis windows",
+    p2_title:"Volume",p2_val:"10–14 sets per muscle/week — within MEV–MAV range for beginners",
+    p3_title:"Rep Ranges",p3_val:"6–12 reps — maximizes mechanical tension & metabolic stress",
+    p4_title:"Progression",p4_val:"Double progression — add reps first, then weight (linear overload)",
+    sec_training:"Training Days",
+    day1_label:"Day 01",day1_title:"DAY A",day1_focus:"Push-focused compounds · Mon / recommended",
+    day2_label:"Day 02",day2_title:"DAY B",day2_focus:"Pull-focused compounds · Wed / recommended",
+    day3_label:"Day 03",day3_title:"DAY C",day3_focus:"Variation compounds · Fri / recommended",
+    th_exercise:"Exercise",th_sets:"Sets",th_reps:"Reps",th_rest:"Rest",
+    u_sets:"sets",u_reps:"reps",u_rest:"rest",u_hold:"hold",u_perleg:"per leg",
+    a1_name:"Barbell Back Squat",a1_muscle:"Quads · Glutes · Core",
+    a2_name:"Barbell Bench Press",a2_muscle:"Chest · Front Delt · Triceps",
+    a3_name:"Barbell Romanian Deadlift",a3_muscle:"Hamstrings · Glutes · Erectors",
+    a4_name:"Seated DB Shoulder Press",a4_muscle:"Anterior · Medial Delt · Triceps",
+    a5_name:"Cable Lat Pulldown",a5_muscle:"Lats · Biceps · Rear Delt",
+    a6_name:"Cable Tricep Pushdown",a6_muscle:"Triceps long + lateral head",
+    a7_name:"DB Bicep Curl",a7_muscle:"Biceps brachii · Brachialis",
+    b1_name:"Leg Press",b1_muscle:"Quads · Glutes",
+    b2_name:"Barbell Bent-Over Row",b2_muscle:"Lats · Traps · Rear Delt · Biceps",
+    b3_name:"DB Incline Press",b3_muscle:"Upper Chest · Front Delt · Triceps",
+    b4_name:"Cable Face Pull",b4_muscle:"Rear Delt · External Rotators",
+    b5_name:"Leg Curl Machine",b5_muscle:"Hamstrings isolated",
+    b6_name:"Lateral Raise (DB or Cable)",b6_muscle:"Medial Deltoid",
+    b7_name:"Plank",b7_muscle:"Core · Anterior chain",
+    c1_name:"Deadlift (Conventional)",c1_muscle:"Full Posterior Chain · Traps",
+    c2_name:"DB Lunges (walking)",c2_muscle:"Quads · Glutes · Adductors",
+    c3_name:"Cable Chest Fly",c3_muscle:"Chest · Anterior Delt",
+    c4_name:"Seated Cable Row",c4_muscle:"Mid-Back · Lats · Biceps",
+    c5_name:"Leg Extension Machine",c5_muscle:"Quad isolation — VMO",
+    c6_name:"EZ Bar Skull Crusher",c6_muscle:"Triceps long head",
+    c7_name:"Incline DB Curl",c7_muscle:"Biceps — long head stretch",
+    sec_schedule:"Weekly Schedule",
+    schedule_info:"Train Mon/Wed/Fri with full rest days in between. At minimum, keep <strong>1 rest day</strong> between each session. Weekend rest is ideal — muscle growth happens during recovery, not during training.",
+    d_mon:"MON",d_tue:"TUE",d_wed:"WED",d_thu:"THU",d_fri:"FRI",d_sat:"SAT",d_sun:"SUN",
+    sec_freq:"Muscle Group Frequency / Week",
+    m_chest:"Chest",m_back:"Back (Lats)",m_shoulders:"Shoulders",m_quads:"Quads",m_hamstrings:"Hamstrings",m_biceps:"Biceps",m_triceps:"Triceps",m_glutes:"Glutes",
+    f_sets9:"sets/week ≈ 9",f_sets6:"sets/week ≈ 6",f_sets8:"sets/week ≈ 8",
+    sec_prog:"Progression Model (Double Progression)",
+    pw1:"W1–2",pt1:"Learn the movements",pl1_1:"Start light — technique first, always",pl1_2:"Hit the bottom of every rep range (e.g. 8 reps)",pl1_3:"Focus on mind-muscle connection",
+    pw2:"W3–4",pt2:"Add reps first",pl2_1:"Push toward top of rep range (e.g. 10 reps)",pl2_2:"Keep same weight until you hit top range on all sets",pl2_3:"Last set should be RPE 8–9 (2 reps left in tank)",
+    pw3:"W5+",pt3:"Add weight, reset reps",pl3_1:"Add 2.5–5 kg to upper body, 5 kg to lower",pl3_2:"Drop back to bottom of rep range",pl3_3:"Repeat the cycle — this is linear overload",
+    pw4:"W9+",pt4:"Deload if needed",pl4_1:"Every 8–12 weeks: reduce weight 40–50% for 1 week",pl4_2:"Protects joints and resets CNS fatigue",pl4_3:"You'll come back stronger — not weaker",
+    sec_calc:"Nutrition & Macro Calculator",
+    calc_title:"MACRO CALCULATOR",calc_sub:"Mifflin–St Jeor BMR · Harris-Benedict Activity · Science-based macros for muscle gain",
+    calc_age:"Age (years)",calc_weight:"Body Weight (kg)",calc_height:"Height (cm)",calc_sex:"Biological Sex",calc_activity:"Activity Level",calc_goal_lbl:"Goal",
+    calc_male:"Male",calc_female:"Female",
+    act_sed:"Sedentary (desk job, no exercise)",act_light:"Lightly Active (1–3 days/week)",act_mod:"Moderately Active (3 days/week — you)",act_active:"Very Active (5–6 days/week)",act_very:"Athlete (2× daily training)",
+    goal_bulk:"Muscle Gain (+250 kcal surplus)",goal_maintain:"Maintain / Recomp",goal_cut:"Fat Loss (−300 kcal deficit)",
+    calc_btn:"CALCULATE MY MACROS",
+    r_kcal_label:"DAILY TARGET CALORIES",r_bmr_label:"Basal Metabolic Rate (BMR)",r_activity_label:"Activity Multiplier",r_goal_adj:"Goal Adjustment",r_formula:"Mifflin–St Jeor Formula",
+    r_protein:"Protein",r_carbs:"Carbohydrates",r_fat:"Fat",
+    calc_note:"📌 Protein: 2.0g/kg (high end for muscle gain) · Fats: 25% of total calories · Carbs: remainder. Adjust ±100 kcal after 2 weeks if body weight isn't tracking as expected. These are starting targets — individual response varies.",
+    footer_note:"WARM UP: 5–10 min light cardio + 1–2 warm-up sets per compound lift<br>NUTRITION: Eat in slight caloric surplus (+200–300 kcal) · 1.6–2.2g protein per kg bodyweight<br>SLEEP: 7–9 hours — the most anabolic activity you can do",
+    bg:"LIFT",
+    err_fill:"Please fill in all fields correctly."
+  },
+  ar: {
+    tag:"برنامج مبني على العلم · كامل الجسم · 3 أيام في الأسبوع",
+    h1:"تضخيم<br><span>كامل الجسم</span>",
+    meta_level:"المستوى <strong>مبتدئ</strong>",meta_goal:"الهدف <strong>بناء العضلات</strong>",meta_freq:"التكرار <strong>مرتان لكل عضلة / أسبوع</strong>",meta_equip:"المعدات <strong>صالة كاملة</strong>",meta_dur:"المدة <strong>٦٠–٧٥ دقيقة / جلسة</strong>",
+    p1_title:"التكرار",p1_val:"كل عضلة تُدرَّب مرتين أسبوعياً — مثالي لنوافذ تخليق البروتين للمبتدئين",
+    p2_title:"الحجم",p2_val:"١٠–١٤ مجموعة لكل عضلة أسبوعياً — ضمن النطاق الأمثل للمبتدئين",
+    p3_title:"نطاق التكرارات",p3_val:"٦–١٢ تكرار — يعظّم التوتر الميكانيكي والضغط الأيضي",
+    p4_title:"التقدم",p4_val:"التقدم المزدوج — زد التكرارات أولاً، ثم الوزن",
+    sec_training:"أيام التدريب",
+    day1_label:"اليوم ٠١",day1_title:"اليوم الأول",day1_focus:"تمارين الدفع المركبة · الاثنين / موصى به",
+    day2_label:"اليوم ٠٢",day2_title:"اليوم الثاني",day2_focus:"تمارين السحب المركبة · الأربعاء / موصى به",
+    day3_label:"اليوم ٠٣",day3_title:"اليوم الثالث",day3_focus:"تمارين متنوعة مركبة · الجمعة / موصى به",
+    th_exercise:"التمرين",th_sets:"مجموعات",th_reps:"تكرارات",th_rest:"راحة",
+    u_sets:"مجموعة",u_reps:"تكرار",u_rest:"راحة",u_hold:"ثبات",u_perleg:"لكل رجل",
+    a1_name:"القرفصاء بالبار",a1_muscle:"الفخذ الأمامي · الأرداف · الجذع",
+    a2_name:"الضغط بالبار على مقعد مستوٍ",a2_muscle:"الصدر · الدالي الأمامي · الترايسبس",
+    a3_name:"الرومانية بالبار",a3_muscle:"أوتار الركبة · الأرداف · الظهر السفلي",
+    a4_name:"ضغط الكتف بالدمبل جالساً",a4_muscle:"الدالي الأمامي والجانبي · الترايسبس",
+    a5_name:"سحب الكيبل للأسفل",a5_muscle:"الظهرية · البايسبس · الدالي الخلفي",
+    a6_name:"دفع الكيبل للترايسبس",a6_muscle:"الرأس الطويل والجانبي للترايسبس",
+    a7_name:"لفة البايسبس بالدمبل",a7_muscle:"البايسبس · العضدية",
+    b1_name:"الضغط بالأرجل",b1_muscle:"الفخذ الأمامي · الأرداف",
+    b2_name:"السحب بالبار منحنياً",b2_muscle:"الظهرية · شبه المنحرف · الدالي الخلفي · البايسبس",
+    b3_name:"الضغط بالدمبل على مقعد مائل",b3_muscle:"الصدر العلوي · الدالي الأمامي · الترايسبس",
+    b4_name:"سحب الكيبل للوجه",b4_muscle:"الدالي الخلفي · المدوِّرات الخارجية",
+    b5_name:"آلة ثني الركبة",b5_muscle:"أوتار الركبة بشكل معزول",
+    b6_name:"رفع جانبي (دمبل أو كيبل)",b6_muscle:"الرأس الأوسط للدالي",
+    b7_name:"بلانك",b7_muscle:"الجذع · السلسلة الأمامية",
+    c1_name:"الرفعة الميتة (تقليدية)",c1_muscle:"السلسلة الخلفية الكاملة · شبه المنحرف",
+    c2_name:"خطوات الدمبل (مشي)",c2_muscle:"الفخذ الأمامي · الأرداف · المقرِّبة",
+    c3_name:"تمرين الفراشة بالكيبل",c3_muscle:"الصدر · الدالي الأمامي",
+    c4_name:"السحب بالكيبل جالساً",c4_muscle:"منتصف الظهر · الظهرية · البايسبس",
+    c5_name:"آلة مد الرجل",c5_muscle:"الفخذ الأمامي المعزول — VMO",
+    c6_name:"طحن الجمجمة بالبار EZ",c6_muscle:"الرأس الطويل للترايسبس",
+    c7_name:"لفة البايسبس على مقعد مائل",c7_muscle:"البايسبس — شد الرأس الطويل",
+    sec_schedule:"الجدول الأسبوعي",
+    schedule_info:"تدرَّب الاثنين/الأربعاء/الجمعة مع أيام راحة كاملة بينها. كحد أدنى، اترك <strong>يوم راحة واحد</strong> بين كل جلسة. الراحة في نهاية الأسبوع مثالية — نمو العضلات يحدث خلال التعافي وليس التدريب.",
+    d_mon:"إث",d_tue:"ثل",d_wed:"أرب",d_thu:"خم",d_fri:"جم",d_sat:"سب",d_sun:"أح",
+    sec_freq:"تكرار مجموعات العضلات / الأسبوع",
+    m_chest:"الصدر",m_back:"الظهر (الظهرية)",m_shoulders:"الأكتاف",m_quads:"الفخذ الأمامي",m_hamstrings:"أوتار الركبة",m_biceps:"البايسبس",m_triceps:"الترايسبس",m_glutes:"الأرداف",
+    f_sets9:"مجموعات/أسبوع ≈ ٩",f_sets6:"مجموعات/أسبوع ≈ ٦",f_sets8:"مجموعات/أسبوع ≈ ٨",
+    sec_prog:"نموذج التقدم (التقدم المزدوج)",
+    pw1:"أ١–٢",pt1:"تعلم الحركات",pl1_1:"ابدأ بخفيف — الأسلوب أولاً دائماً",pl1_2:"أكمل أدنى نطاق التكرارات (مثلاً ٨ تكرارات)",pl1_3:"ركز على الاتصال الذهني بالعضلة",
+    pw2:"أ٣–٤",pt2:"زد التكرارات أولاً",pl2_1:"ادفع نحو أعلى نطاق التكرارات (مثلاً ١٠)",pl2_2:"احتفظ بنفس الوزن حتى تصل للحد الأعلى في كل المجموعات",pl2_3:"المجموعة الأخيرة يجب أن تكون RPE ٨–٩",
+    pw3:"أ٥+",pt3:"زد الوزن، أعد ضبط التكرارات",pl3_1:"أضف ٢.٥–٥ كغ للجزء العلوي، ٥ كغ للسفلي",pl3_2:"ارجع لأدنى نطاق التكرارات",pl3_3:"كرر الدورة — هذا هو الحمل الخطي",
+    pw4:"أ٩+",pt4:"أسبوع تخفيف عند الحاجة",pl4_1:"كل ٨–١٢ أسبوعاً: خفّض الوزن ٤٠–٥٠٪ لأسبوع",pl4_2:"يحمي المفاصل ويعيد ضبط إجهاد الجهاز العصبي",pl4_3:"ستعود أقوى — ليس أضعف",
+    sec_calc:"حاسبة التغذية والمغذيات الكبرى",
+    calc_title:"حاسبة المغذيات",calc_sub:"معادلة Mifflin–St Jeor للتمثيل الغذائي الأساسي · مُعامل النشاط · مغذيات مبنية على الأبحاث",
+    calc_age:"العمر (سنوات)",calc_weight:"وزن الجسم (كغ)",calc_height:"الطول (سم)",calc_sex:"الجنس البيولوجي",calc_activity:"مستوى النشاط",calc_goal_lbl:"الهدف",
+    calc_male:"ذكر",calc_female:"أنثى",
+    act_sed:"خامل (عمل مكتبي، بلا تمرين)",act_light:"نشاط خفيف (١–٣ أيام/أسبوع)",act_mod:"نشاط متوسط (٣ أيام/أسبوع — أنت)",act_active:"نشاط عالٍ (٥–٦ أيام/أسبوع)",act_very:"رياضي (تدريبان يومياً)",
+    goal_bulk:"بناء العضلات (فائض +٢٥٠ سعرة)",goal_maintain:"الحفاظ / إعادة التكوين",goal_cut:"حرق الدهون (عجز −٣٠٠ سعرة)",
+    calc_btn:"احسب مغذياتي",
+    r_kcal_label:"السعرات الحرارية اليومية المستهدفة",r_bmr_label:"معدل الأيض الأساسي",r_activity_label:"مُعامل النشاط",r_goal_adj:"تعديل الهدف",r_formula:"معادلة Mifflin–St Jeor",
+    r_protein:"البروتين",r_carbs:"الكربوهيدرات",r_fat:"الدهون",
+    calc_note:"📌 البروتين: ٢.٠ غ/كغ (أعلى نطاق لبناء العضلات) · الدهون: ٢٥٪ من إجمالي السعرات · الكربوهيدرات: الباقي. عدّل ±١٠٠ سعرة بعد أسبوعين إذا لم يتغير وزن الجسم كما هو متوقع. هذه أهداف ابتدائية — الاستجابة الفردية تتفاوت.",
+    footer_note:"الإحماء: ٥–١٠ دقائق كارديو خفيف + ١–٢ مجموعة إحماء لكل تمرين مركب<br>التغذية: تناول فائضاً طفيفاً (+٢٠٠–٣٠٠ سعرة) · ١.٦–٢.٢ غرام بروتين / كغ<br>النوم: ٧–٩ ساعات — أكثر نشاط ابتنائي يمكنك القيام به",
+    bg:"رفع",
+    err_fill:"يرجى ملء جميع الحقول بشكل صحيح."
+  },
+  es: {
+    tag:"Programa Basado en Ciencia · Cuerpo Completo · 3 Días/Semana",
+    h1:"CUERPO<br><span>COMPLETO</span>",
+    meta_level:"NIVEL <strong>Principiante</strong>",meta_goal:"OBJETIVO <strong>Ganar Músculo</strong>",meta_freq:"FRECUENCIA <strong>2× por músculo/semana</strong>",meta_equip:"EQUIPO <strong>Gimnasio Completo</strong>",meta_dur:"DURACIÓN <strong>60–75 min/sesión</strong>",
+    p1_title:"Frecuencia",p1_val:"Cada músculo entrenado 2×/semana — óptimo para síntesis proteica en principiantes",
+    p2_title:"Volumen",p2_val:"10–14 series por músculo/semana — dentro del rango MEV–MAV para principiantes",
+    p3_title:"Rangos de Reps",p3_val:"6–12 reps — maximiza tensión mecánica y estrés metabólico",
+    p4_title:"Progresión",p4_val:"Progresión doble — añade reps primero, luego peso (sobrecarga lineal)",
+    sec_training:"Días de Entrenamiento",
+    day1_label:"Día 01",day1_title:"DÍA A",day1_focus:"Compuestos de empuje · Lunes / recomendado",
+    day2_label:"Día 02",day2_title:"DÍA B",day2_focus:"Compuestos de jalón · Miércoles / recomendado",
+    day3_label:"Día 03",day3_title:"DÍA C",day3_focus:"Variaciones compuestas · Viernes / recomendado",
+    th_exercise:"Ejercicio",th_sets:"Series",th_reps:"Reps",th_rest:"Descanso",
+    u_sets:"series",u_reps:"reps",u_rest:"descanso",u_hold:"aguante",u_perleg:"por pierna",
+    a1_name:"Sentadilla con Barra",a1_muscle:"Cuádriceps · Glúteos · Core",
+    a2_name:"Press de Banca con Barra",a2_muscle:"Pecho · Deltoides Anterior · Tríceps",
+    a3_name:"Peso Muerto Rumano con Barra",a3_muscle:"Isquios · Glúteos · Erectores",
+    a4_name:"Press de Hombro con Mancuerna Sentado",a4_muscle:"Deltoides Anterior y Medial · Tríceps",
+    a5_name:"Jalón al Pecho en Polea",a5_muscle:"Dorsales · Bíceps · Deltoides Posterior",
+    a6_name:"Extensión de Tríceps en Polea",a6_muscle:"Cabeza larga y lateral del Tríceps",
+    a7_name:"Curl de Bíceps con Mancuerna",a7_muscle:"Bíceps braquial · Braquial",
+    b1_name:"Prensa de Piernas",b1_muscle:"Cuádriceps · Glúteos",
+    b2_name:"Remo con Barra Inclinado",b2_muscle:"Dorsales · Trapecios · Deltoides Posterior · Bíceps",
+    b3_name:"Press Inclinado con Mancuerna",b3_muscle:"Pecho Superior · Deltoides Anterior · Tríceps",
+    b4_name:"Face Pull en Polea",b4_muscle:"Deltoides Posterior · Rotadores Externos",
+    b5_name:"Curl Femoral en Máquina",b5_muscle:"Isquiotibiales aislados",
+    b6_name:"Elevación Lateral (Mancuerna o Polea)",b6_muscle:"Deltoides Medial",
+    b7_name:"Plancha",b7_muscle:"Core · Cadena Anterior",
+    c1_name:"Peso Muerto Convencional",c1_muscle:"Cadena Posterior Completa · Trapecios",
+    c2_name:"Zancadas con Mancuerna (caminando)",c2_muscle:"Cuádriceps · Glúteos · Aductores",
+    c3_name:"Aperturas en Polea",c3_muscle:"Pecho · Deltoides Anterior",
+    c4_name:"Remo Sentado en Polea",c4_muscle:"Espalda Media · Dorsales · Bíceps",
+    c5_name:"Extensión de Pierna en Máquina",c5_muscle:"Cuádriceps aislado — VMO",
+    c6_name:"Skull Crusher con Barra EZ",c6_muscle:"Cabeza larga del Tríceps",
+    c7_name:"Curl de Bíceps Inclinado con Mancuerna",c7_muscle:"Bíceps — estiramiento cabeza larga",
+    sec_schedule:"Horario Semanal",
+    schedule_info:"Entrena Lun/Mié/Vie con días de descanso completo entre sesiones. Como mínimo, mantén <strong>1 día de descanso</strong> entre cada sesión. El descanso del fin de semana es ideal — el crecimiento muscular ocurre durante la recuperación, no el entrenamiento.",
+    d_mon:"LUN",d_tue:"MAR",d_wed:"MIÉ",d_thu:"JUE",d_fri:"VIE",d_sat:"SÁB",d_sun:"DOM",
+    sec_freq:"Frecuencia por Grupo Muscular / Semana",
+    m_chest:"Pecho",m_back:"Espalda (Dorsales)",m_shoulders:"Hombros",m_quads:"Cuádriceps",m_hamstrings:"Isquiotibiales",m_biceps:"Bíceps",m_triceps:"Tríceps",m_glutes:"Glúteos",
+    f_sets9:"series/semana ≈ 9",f_sets6:"series/semana ≈ 6",f_sets8:"series/semana ≈ 8",
+    sec_prog:"Modelo de Progresión (Progresión Doble)",
+    pw1:"S1–2",pt1:"Aprender los movimientos",pl1_1:"Empieza ligero — la técnica primero, siempre",pl1_2:"Alcanza el mínimo del rango de reps (ej. 8 reps)",pl1_3:"Enfócate en la conexión mente-músculo",
+    pw2:"S3–4",pt2:"Añade reps primero",pl2_1:"Avanza hacia el tope del rango (ej. 10 reps)",pl2_2:"Mantén el mismo peso hasta alcanzar el máximo en todas las series",pl2_3:"La última serie debe ser RPE 8–9 (2 reps en reserva)",
+    pw3:"S5+",pt3:"Añade peso, reinicia reps",pl3_1:"Añade 2.5–5 kg en tren superior, 5 kg en inferior",pl3_2:"Vuelve al mínimo del rango de repeticiones",pl3_3:"Repite el ciclo — esto es sobrecarga lineal",
+    pw4:"S9+",pt4:"Descarga si es necesario",pl4_1:"Cada 8–12 semanas: reduce el peso 40–50% por 1 semana",pl4_2:"Protege las articulaciones y resetea la fatiga del SNC",pl4_3:"Volverás más fuerte — no más débil",
+    sec_calc:"Calculadora de Nutrición y Macros",
+    calc_title:"CALCULADORA DE MACROS",calc_sub:"Mifflin–St Jeor TMB · Multiplicador de actividad Harris-Benedict · Macros basados en ciencia",
+    calc_age:"Edad (años)",calc_weight:"Peso Corporal (kg)",calc_height:"Altura (cm)",calc_sex:"Sexo Biológico",calc_activity:"Nivel de Actividad",calc_goal_lbl:"Objetivo",
+    calc_male:"Masculino",calc_female:"Femenino",
+    act_sed:"Sedentario (trabajo de oficina, sin ejercicio)",act_light:"Ligeramente Activo (1–3 días/semana)",act_mod:"Moderadamente Activo (3 días/semana — tú)",act_active:"Muy Activo (5–6 días/semana)",act_very:"Atleta (2 entrenamientos diarios)",
+    goal_bulk:"Ganar Músculo (+250 kcal superávit)",goal_maintain:"Mantener / Recomposición",goal_cut:"Perder Grasa (−300 kcal déficit)",
+    calc_btn:"CALCULAR MIS MACROS",
+    r_kcal_label:"CALORÍAS DIARIAS OBJETIVO",r_bmr_label:"Tasa Metabólica Basal (TMB)",r_activity_label:"Multiplicador de Actividad",r_goal_adj:"Ajuste por Objetivo",r_formula:"Fórmula Mifflin–St Jeor",
+    r_protein:"Proteína",r_carbs:"Carbohidratos",r_fat:"Grasas",
+    calc_note:"📌 Proteína: 2.0g/kg (máximo para ganancia muscular) · Grasas: 25% del total calórico · Carbohidratos: el resto. Ajusta ±100 kcal después de 2 semanas si el peso no cambia como se espera. Estos son objetivos iniciales — la respuesta individual varía.",
+    footer_note:"CALENTAMIENTO: 5–10 min de cardio suave + 1–2 series de calentamiento por ejercicio compuesto<br>NUTRICIÓN: Come con superávit leve (+200–300 kcal) · 1.6–2.2g de proteína por kg de peso corporal<br>SUEÑO: 7–9 horas — la actividad más anabólica que puedes hacer",
+    bg:"LIFT",
+    err_fill:"Por favor, completa todos los campos correctamente."
+  },
+  de: {
+    tag:"Wissenschaftlich fundiertes Programm · Ganzkörper · 3 Tage/Woche",
+    h1:"GANZKÖRPER<br><span>HYPERTROPHIE</span>",
+    meta_level:"LEVEL <strong>Anfänger</strong>",meta_goal:"ZIEL <strong>Muskelaufbau</strong>",meta_freq:"FREQUENZ <strong>2× pro Muskel/Woche</strong>",meta_equip:"AUSRÜSTUNG <strong>Volles Fitnessstudio</strong>",meta_dur:"DAUER <strong>60–75 Min./Einheit</strong>",
+    p1_title:"Frequenz",p1_val:"Jeder Muskel 2×/Woche trainiert — optimal für Proteinsynthesefenster bei Anfängern",
+    p2_title:"Volumen",p2_val:"10–14 Sätze pro Muskel/Woche — im MEV–MAV-Bereich für Anfänger",
+    p3_title:"Wiederholungsbereiche",p3_val:"6–12 Wdh. — maximiert mechanische Spannung & metabolischen Stress",
+    p4_title:"Progression",p4_val:"Doppelte Progression — erst Wdh. steigern, dann Gewicht (lineare Überlastung)",
+    sec_training:"Trainingstage",
+    day1_label:"Tag 01",day1_title:"TAG A",day1_focus:"Drückübungen · Mo / empfohlen",
+    day2_label:"Tag 02",day2_title:"TAG B",day2_focus:"Zugübungen · Mi / empfohlen",
+    day3_label:"Tag 03",day3_title:"TAG C",day3_focus:"Variationsübungen · Fr / empfohlen",
+    th_exercise:"Übung",th_sets:"Sätze",th_reps:"Wdh.",th_rest:"Pause",
+    u_sets:"Sätze",u_reps:"Wdh.",u_rest:"Pause",u_hold:"Halten",u_perleg:"pro Bein",
+    a1_name:"Kniebeuge mit Langhantel",a1_muscle:"Quadrizeps · Gesäß · Rumpf",
+    a2_name:"Bankdrücken mit Langhantel",a2_muscle:"Brust · Vorderer Deltoid · Trizeps",
+    a3_name:"Rumänisches Kreuzheben",a3_muscle:"Hamstrings · Gesäß · Rückenstrecker",
+    a4_name:"Schulterdrücken mit Kurzhanteln (sitzend)",a4_muscle:"Vord. · Seit. Deltoid · Trizeps",
+    a5_name:"Latzug am Kabel",a5_muscle:"Latissimus · Bizeps · Hinterer Deltoid",
+    a6_name:"Trizepsdrücken am Kabel",a6_muscle:"Langer + seitlicher Trizepskopf",
+    a7_name:"Bizepscurl mit Kurzhantel",a7_muscle:"Bizeps brachii · Brachialis",
+    b1_name:"Beinpresse",b1_muscle:"Quadrizeps · Gesäß",
+    b2_name:"Rudern mit Langhantel (vorgebeugt)",b2_muscle:"Latissimus · Trapez · Hint. Deltoid · Bizeps",
+    b3_name:"Schrägbankdrücken mit Kurzhantel",b3_muscle:"Obere Brust · Vord. Deltoid · Trizeps",
+    b4_name:"Face Pull am Kabel",b4_muscle:"Hinterer Deltoid · Außenrotatoren",
+    b5_name:"Beinbeuger-Maschine",b5_muscle:"Hamstrings isoliert",
+    b6_name:"Seitheben (Kurzhantel oder Kabel)",b6_muscle:"Mittlerer Deltoid",
+    b7_name:"Plank",b7_muscle:"Rumpf · Vordere Kette",
+    c1_name:"Konventionelles Kreuzheben",c1_muscle:"Hintere Kette gesamt · Trapez",
+    c2_name:"Ausfallschritte mit Kurzhantel (gehend)",c2_muscle:"Quadrizeps · Gesäß · Adduktoren",
+    c3_name:"Kabelfliegende",c3_muscle:"Brust · Vorderer Deltoid",
+    c4_name:"Rudern am Kabel (sitzend)",c4_muscle:"Mitte Rücken · Latissimus · Bizeps",
+    c5_name:"Beinstrecker-Maschine",c5_muscle:"Quadrizeps isoliert — VMO",
+    c6_name:"Skull Crusher mit EZ-Stange",c6_muscle:"Langer Trizepskopf",
+    c7_name:"Bizepscurl auf Schrägbank",c7_muscle:"Bizeps — Dehnung des langen Kopfes",
+    sec_schedule:"Wochenplan",
+    schedule_info:"Trainiere Mo/Mi/Fr mit vollen Ruhetagen dazwischen. Mindestens <strong>1 Ruhetag</strong> zwischen den Einheiten. Wochenendruhe ist ideal — Muskelwachstum findet bei Erholung statt, nicht beim Training.",
+    d_mon:"MO",d_tue:"DI",d_wed:"MI",d_thu:"DO",d_fri:"FR",d_sat:"SA",d_sun:"SO",
+    sec_freq:"Muskelgruppen-Frequenz / Woche",
+    m_chest:"Brust",m_back:"Rücken (Latissimus)",m_shoulders:"Schultern",m_quads:"Quadrizeps",m_hamstrings:"Hamstrings",m_biceps:"Bizeps",m_triceps:"Trizeps",m_glutes:"Gesäß",
+    f_sets9:"Sätze/Woche ≈ 9",f_sets6:"Sätze/Woche ≈ 6",f_sets8:"Sätze/Woche ≈ 8",
+    sec_prog:"Progressionsmodell (Doppelte Progression)",
+    pw1:"W1–2",pt1:"Bewegungen erlernen",pl1_1:"Leicht anfangen — Technik hat immer Vorrang",pl1_2:"Unteres Ende des Wdh.-Bereichs treffen (z.B. 8 Wdh.)",pl1_3:"Fokus auf die Geist-Muskel-Verbindung",
+    pw2:"W3–4",pt2:"Zuerst Wdh. steigern",pl2_1:"Richtung oberes Ende des Bereichs arbeiten (z.B. 10)",pl2_2:"Gleiches Gewicht halten bis alle Sätze das Maximum erreichen",pl2_3:"Letzter Satz sollte RPE 8–9 sein (2 Wdh. Reserve)",
+    pw3:"W5+",pt3:"Gewicht erhöhen, Wdh. zurücksetzen",pl3_1:"Oberkörper +2,5–5 kg, Unterkörper +5 kg",pl3_2:"Zurück zum unteren Ende des Wdh.-Bereichs",pl3_3:"Zyklus wiederholen — das ist lineare Überlastung",
+    pw4:"W9+",pt4:"Deload bei Bedarf",pl4_1:"Alle 8–12 Wochen: Gewicht 1 Woche um 40–50% reduzieren",pl4_2:"Schützt Gelenke und setzt ZNS-Ermüdung zurück",pl4_3:"Du kommst stärker zurück — nicht schwächer",
+    sec_calc:"Ernährungs- & Makro-Rechner",
+    calc_title:"MAKRO-RECHNER",calc_sub:"Mifflin–St Jeor Grundumsatz · Harris-Benedict Aktivitätsfaktor · Wissenschaftlich fundierte Makros",
+    calc_age:"Alter (Jahre)",calc_weight:"Körpergewicht (kg)",calc_height:"Körpergröße (cm)",calc_sex:"Biologisches Geschlecht",calc_activity:"Aktivitätsniveau",calc_goal_lbl:"Ziel",
+    calc_male:"Männlich",calc_female:"Weiblich",
+    act_sed:"Sitzend (Bürojob, kein Sport)",act_light:"Leicht Aktiv (1–3 Tage/Woche)",act_mod:"Mäßig Aktiv (3 Tage/Woche — du)",act_active:"Sehr Aktiv (5–6 Tage/Woche)",act_very:"Athlet (2× tägliches Training)",
+    goal_bulk:"Muskelaufbau (+250 kcal Überschuss)",goal_maintain:"Halten / Körperkomposition",goal_cut:"Fettabbau (−300 kcal Defizit)",
+    calc_btn:"MEINE MAKROS BERECHNEN",
+    r_kcal_label:"TÄGLICHER KALORIENBEDARF",r_bmr_label:"Grundumsatz (BMR)",r_activity_label:"Aktivitätsfaktor",r_goal_adj:"Zielanpassung",r_formula:"Mifflin–St Jeor Formel",
+    r_protein:"Protein",r_carbs:"Kohlenhydrate",r_fat:"Fett",
+    calc_note:"📌 Protein: 2,0g/kg (Obergrenze für Muskelaufbau) · Fett: 25% der Gesamtkalorien · Kohlenhydrate: Rest. Nach 2 Wochen ±100 kcal anpassen, falls das Körpergewicht nicht wie erwartet reagiert. Dies sind Startwerte — individuelle Reaktionen variieren.",
+    footer_note:"AUFWÄRMEN: 5–10 Min. leichtes Cardio + 1–2 Aufwärmsätze pro Verbundübung<br>ERNÄHRUNG: Leichter Kalorienüberschuss (+200–300 kcal) · 1,6–2,2g Protein pro kg Körpergewicht<br>SCHLAF: 7–9 Stunden — die anabolste Aktivität, die du machen kannst",
+    bg:"LIFT",
+    err_fill:"Bitte alle Felder korrekt ausfüllen."
+  }
+};
+
+// ==================== LANG SWITCHER ====================
+function setLang(lang) {
+  const t = T[lang];
+  const html = document.documentElement;
+  const body = document.body;
+  if (lang === 'ar') {
+    html.setAttribute('dir','rtl');
+    html.setAttribute('lang','ar');
+    body.className = 'lang-ar';
+  } else {
+    html.setAttribute('dir','ltr');
+    html.setAttribute('lang',lang);
+    body.className = 'lang-'+lang;
+  }
+  document.querySelector('header').setAttribute('data-bg-word', t.bg);
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  // Update select options
+  document.querySelectorAll('[data-i18n-opt]').forEach(el => {
+    const key = el.getAttribute('data-i18n-opt');
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent === lang.toUpperCase());
+  });
+  window._currentLang = lang;
+}
+
+// ==================== NUTRITION CALCULATOR ====================
+function calcNutrition() {
+  const lang = window._currentLang || 'en';
+  const t = T[lang];
+  const age = parseFloat(document.getElementById('c_age').value);
+  const weight = parseFloat(document.getElementById('c_weight').value);
+  const height = parseFloat(document.getElementById('c_height').value);
+  const sex = document.getElementById('c_sex').value;
+  const activityFactor = parseFloat(document.getElementById('c_activity').value);
+  const goalType = document.getElementById('c_goaltype').value;
+
+  if (!age || !weight || !height || age<10 || age>100 || weight<20 || weight>300 || height<100 || height>250) {
+    alert(t.err_fill); return;
+  }
+
+  // Mifflin–St Jeor BMR
+  let bmr;
+  if (sex === 'm') {
+    bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+  } else {
+    bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+  }
+
+  let tdee = bmr * activityFactor;
+
+  // Goal adjustment
+  let goalAdj = 0;
+  let goalText = '';
+  if (goalType === 'bulk')     { goalAdj = +250; goalText = '+250 kcal'; }
+  else if (goalType === 'cut') { goalAdj = -300; goalText = '−300 kcal'; }
+  else                         { goalAdj = 0;    goalText = '0 kcal'; }
+
+  const targetKcal = Math.round(tdee + goalAdj);
+
+  // Macros — science-based for muscle gain
+  // Protein: 2.0g/kg bodyweight
+  const proteinG = Math.round(weight * 2.0);
+  const proteinKcal = proteinG * 4;
+
+  // Fat: 25% of total calories
+  const fatKcal = Math.round(targetKcal * 0.25);
+  const fatG = Math.round(fatKcal / 9);
+
+  // Carbs: remainder
+  const carbsKcal = targetKcal - proteinKcal - fatKcal;
+  const carbsG = Math.round(Math.max(carbsKcal, 0) / 4);
+
+  // Render results
+  document.getElementById('r_tdee').textContent = targetKcal.toLocaleString();
+  document.getElementById('r_bmr').textContent = Math.round(bmr).toLocaleString();
+  document.getElementById('r_activity_factor').textContent = '×' + activityFactor;
+  document.getElementById('r_goal_text').textContent = goalText;
+
+  document.getElementById('r_protein_g').textContent = proteinG;
+  document.getElementById('r_protein_kcal').textContent = proteinKcal + ' kcal (' + Math.round(proteinKcal/targetKcal*100) + '%)';
+  document.getElementById('r_protein_bar').style.width = Math.round(proteinKcal/targetKcal*100) + '%';
+
+  document.getElementById('r_carbs_g').textContent = carbsG;
+  document.getElementById('r_carbs_kcal').textContent = carbsKcal + ' kcal (' + Math.round(carbsKcal/targetKcal*100) + '%)';
+  document.getElementById('r_carbs_bar').style.width = Math.round(carbsKcal/targetKcal*100) + '%';
+
+  document.getElementById('r_fat_g').textContent = fatG;
+  document.getElementById('r_fat_kcal').textContent = fatKcal + ' kcal (' + Math.round(fatKcal/targetKcal*100) + '%)';
+  document.getElementById('r_fat_bar').style.width = '25%';
+
+  const results = document.getElementById('calcResults');
+  results.classList.add('visible');
+  setTimeout(() => results.scrollIntoView({behavior:'smooth', block:'nearest'}), 100);
+}
+
+setLang('en');
+
+// ==================== DOWNLOAD HTML (OFFLINE-READY) ====================
+const _toastMsgs = {
+  dl_ok:     {en:'✅ Downloaded! Open the file in any browser — no internet needed.',ar:'✅ تم التحميل! افتح الملف في أي متصفح بدون إنترنت.',es:'✅ ¡Descargado! Ábrelo en cualquier navegador sin internet.',de:'✅ Heruntergeladen! Im Browser öffnen — kein Internet nötig.'},
+  pwa_ok:    {en:'✅ Installing app…',ar:'✅ جاري التثبيت…',es:'✅ Instalando app…',de:'✅ App wird installiert…'},
+  pwa_done:  {en:'✅ App installed successfully!',ar:'✅ تم تثبيت التطبيق!',es:'✅ ¡App instalada!',de:'✅ App erfolgreich installiert!'},
+  pwa_hint:  {en:'ℹ️ Open in Chrome → tap ⋮ menu → "Add to Home Screen"',ar:'ℹ️ افتح في Chrome ثم اضغط "إضافة إلى الشاشة الرئيسية"',es:'ℹ️ Abre en Chrome → menú ⋮ → "Añadir a pantalla de inicio"',de:'ℹ️ In Chrome öffnen → Menü ⋮ → "Zum Startbildschirm hinzufügen"'},
+};
+
+function _getToast(key) {
+  const lang = window._currentLang || 'en';
+  return (_toastMsgs[key] || {})[lang] || (_toastMsgs[key] || {}).en || '';
+}
+
+function downloadHTML() {
+  // Inject a small offline-fonts fallback style so it looks great without internet
+  const offlineFallback = `<style id="offline-fonts-fallback">
+    /* Offline fallback: use system fonts if Google Fonts unavailable */
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&family=Cairo:wght@300;400;600;700&display=swap');
+  </style>`;
+
+  // Get full HTML snapshot
+  let html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+  // Mark it as a standalone offline file
+  html = html.replace('<title>', '<title>[Offline] ');
+
+  const blob = new Blob([html], {type: 'text/html;charset=utf-8'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = '3day-fullbody-program-offline.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast(_getToast('dl_ok'));
+}
+
+// ==================== PWA INSTALL ====================
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('pwaInstallBtn').classList.add('show');
+});
+
+window.addEventListener('appinstalled', () => {
+  deferredPrompt = null;
+  document.getElementById('pwaInstallBtn').classList.remove('show');
+  showToast(_getToast('pwa_done'));
+});
+
+async function installPWA() {
+  if (!deferredPrompt) {
+    showToast(_getToast('pwa_hint'));
+    return;
+  }
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  if (outcome === 'accepted') showToast(_getToast('pwa_ok'));
+  deferredPrompt = null;
+}
+
+// ==================== TOAST ====================
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+// ==================== PATCH setLang to update button labels ====================
+const dlLabels  = {en:'Download for Offline', ar:'تحميل للاستخدام دون إنترنت', es:'Descargar sin Internet', de:'Offline Herunterladen'};
+const pwaLabels = {en:'Install as App',       ar:'تثبيت كتطبيق',               es:'Instalar como App',    de:'Als App installieren'};
+
+const _baseLangFn = window.setLang;
+window.setLang = function(lang) {
+  _baseLangFn(lang);
+  const dl = document.getElementById('dlLabel');
+  const pw = document.getElementById('pwaLabel');
+  if (dl) dl.textContent = dlLabels[lang] || dlLabels.en;
+  if (pw) pw.textContent = pwaLabels[lang] || pwaLabels.en;
+  // Trigger initial label on load
+};
+
+// Init labels for default language
+(function() {
+  const dl = document.getElementById('dlLabel');
+  const pw = document.getElementById('pwaLabel');
+  if (dl) dl.textContent = dlLabels['en'];
+  if (pw) pw.textContent = pwaLabels['en'];
+})();
+</script>
+
+
+</body></html>

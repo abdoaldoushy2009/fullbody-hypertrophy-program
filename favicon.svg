@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" shape-rendering="crispEdges">
+  <defs>
+    <linearGradient id="yg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8ff3b"/>
+      <stop offset="100%" stop-color="#c8df00"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background square — deep dark -->
+  <rect width="32" height="32" rx="6" fill="#0a0a0a"/>
+
+  <!-- Barbell bar — horizontal center -->
+  <rect x="4" y="14" width="24" height="4" rx="1" fill="#ffffff" opacity="0.9"/>
+
+  <!-- Left outer plate -->
+  <rect x="3" y="9" width="4" height="14" rx="1" fill="#e8ff3b"/>
+  <!-- Left inner plate -->
+  <rect x="7.5" y="11" width="2.5" height="10" rx="0.5" fill="#ffffff" opacity="0.7"/>
+
+  <!-- Right inner plate -->
+  <rect x="22" y="11" width="2.5" height="10" rx="0.5" fill="#ffffff" opacity="0.7"/>
+  <!-- Right outer plate -->
+  <rect x="25" y="9" width="4" height="14" rx="1" fill="#e8ff3b"/>
+
+  <!-- Letter H centered — bold white, sits on bar -->
+  <rect x="12.5" y="7"  width="2.5" height="9"  rx="0.5" fill="#ffffff"/>
+  <rect x="12.5" y="11" width="7"   height="2.5" rx="0.5" fill="#ffffff"/>
+  <rect x="17"   y="7"  width="2.5" height="9"  rx="0.5" fill="#ffffff"/>
+
+  <!-- Accent dot bottom right -->
+  <circle cx="27" cy="27" r="2" fill="#e8ff3b"/>
+</svg>
